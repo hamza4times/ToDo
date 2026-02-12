@@ -1,5 +1,5 @@
 // import { format, compareAsc } from "date-fns";
-export {projects};
+export {projects, deleteProject, project, toDo};
 /*
 title, description, dueDate and priority
 */
@@ -32,6 +32,14 @@ class toDo{
     }
 }
 
+let exampleToDo1 = new toDo("Walk the dog", "I will walk the dog", new Date(1995, 11, 25, 3, 24, 0, 0), "HIGH!", "DoDoDoDo");
+let newProject = new project("projectname", [exampleToDo1]);
 
-const defualt = new project("defualt", ["example 1", "example 2", "ex3"]);
-let projects = [defualt];
+let projects = [newProject];
+
+function deleteProject(projectName){
+    const index = projects.indexOf(projectName);
+        if (index > -1){
+            projects.splice(index, 1);
+        }
+}
