@@ -1,9 +1,12 @@
-import {projects, deleteProject, project} from "./logic.js"; // functions
-import {project, toDo} from "./logic.js"; // classes
+import { main } from "envinfo";
+import {projects, deleteProject} from "./logic.js"; // functions [import]
+import {project, toDo} from "./logic.js"; // classes [import]
+export {updateProjectSidebar} // functions [export]
 
 let mainContent = document.querySelector('#main');
 let sidebar = document.querySelector('#sidebar');
 let addProjectButton = document.querySelector('#addProjectButton');
+
 
 addProjectButton.addEventListener('click', () => {
     createNewProjectDialog();
@@ -17,7 +20,9 @@ function updateProjectSidebar(){
 
 function createNewProjectDialog(){
     let addProjectDialog = document.querySelector('#addProjectDialog');
+    addProjectDialog.showModal();
     addProjectDialog.innerHTML = "";
+    addProjectDialog.style.width = '100px';
 
     let closeButton = document.createElement('button');
     closeButton.textContent = "close";
@@ -37,5 +42,4 @@ function createNewProjectDialog(){
     });
 
     addProjectDialog.appendChild(submitNewProjectButton);
-    addProjectDialog.showModal();
 }
