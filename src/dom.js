@@ -12,11 +12,17 @@ addProjectButton.addEventListener('click', () => {
 });
 
 function updateProjectSidebar(){
+    sidebar.innerHTML = '';
     for (let i=0; i < projects.length; i++){
         let projectName = projects[i].name;
-        let projectText = document.createElement('h1');
-        projectText.textContent = projectName;
-        sidebar.appendChild(projectText);
+        let projectBTN = document.createElement('button');
+        projectBTN.textContent = projectName;
+
+        projectBTN.addEventListener('click', () =>{
+            createProjectPage(projects[i]);
+        })
+
+        sidebar.appendChild(projectBTN);
     }
 }
 
@@ -46,4 +52,67 @@ function createNewProjectDialog(){
     });
 
     addProjectDialog.appendChild(submitNewProjectButton);
+}
+
+function createProjectPage(project){
+    main.innerHTML = '';
+
+    let addNewToDoButton = document.createElement('button');
+    addNewToDoButton.textContent = "Add new To-Do";
+    main.appendChild(addNewToDoButton);
+    addNewToDoButton.addEventListener('click', () => openCreateNewToDoDialog(project));
+
+    let name = project.name;
+    let todos = project.todos;
+
+    let projectName = document.createElement('h1');
+    projectName.textContent = name;
+    main.appendChild(projectName);
+
+    for (let i=0; i < todos.length; i++){
+        let todo = todos[i];
+        let todoText = document.createElement('h1');
+        todoText.textContent = todo;
+        main.appendChild(todoText);
+    }
+}
+
+function openCreateNewToDoDialog(project){
+    let newToDoDialog = document.createElement('dialog');
+
+    let closeButton = document.createElement('button');
+    let titleInputField = document.createElement('input');
+    let descriptionInputField = document.createElement('input');
+    let dueDateInputField = document.createElement('input');
+    let priorityInputField = document.createElement('input');
+    let notesInputField = document.createElement('input');
+    let submitButton = document.createElement('button');
+
+    closeButton.addEventListener('click', () => {
+        newToDoDialog.innerHTML = '';
+        newToDoDialog.close();
+    });
+
+    submitButton.addEventListener('click', () => {
+        let title = titleInputField.value;
+        let description = descriptionInputField.value;
+        let dueDate = dueDateInputField.value;
+        let priority = priorityInputField.value;
+        let notes = notesInputField.value;
+        let newTodo = new toDo (title, description, dueDate, priority, notes);
+        project.addToDo(newTodo);
+        createProjectPage(project);
+    });
+    
+
+    main.appendChild(newToDoDialog);
+    newToDoDialog.appendChild(closeButton);
+    newToDoDialog.appendChild(titleInputField);
+    newToDoDialog.appendChild(descriptionInputField);
+    newToDoDialog.appendChild(dueDateInputField);
+    newToDoDialog.appendChild(priorityInputField);
+    newToDoDialog.appendChild(notesInputField);
+    newToDoDialog.appendChild(submitButton);
+
+    newToDoDialog.showModal();
 }
