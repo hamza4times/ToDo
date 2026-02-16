@@ -4,15 +4,22 @@ export {updateProjectSidebar} // functions [export]
 
 let mainContent = document.querySelector('#main');
 let sidebar = document.querySelector('#sidebar');
+let projectButtonContainer = document.querySelector('#projectButtonContainer');
 let addProjectButton = document.querySelector('#addProjectButton');
+let viewAllToDosButton = document.querySelector('#viewAllToDosButton');
 
+viewAllToDosButton.addEventListener('click', () => {
+    for (let i = 0; i < projects.length; i++){
+        createProjectPage(projects[i]);
+    }
+});
 
 addProjectButton.addEventListener('click', () => {
     createNewProjectDialog();
 });
 
 function updateProjectSidebar(){
-    sidebar.innerHTML = '';
+    projectButtonContainer.innerHTML = '';
     for (let i=0; i < projects.length; i++){
         let projectName = projects[i].name;
         let projectBTN = document.createElement('button');
@@ -22,7 +29,7 @@ function updateProjectSidebar(){
             createProjectPage(projects[i]);
         })
 
-        sidebar.appendChild(projectBTN);
+        projectButtonContainer.appendChild(projectBTN);
     }
 }
 
@@ -104,9 +111,11 @@ function createToDoUI(todo){
     todoNotesUI.textContent = notes;
 
     let editToDoButton = document.createElement('button');
+    editToDoButton.textContent = "Edit";
     editToDoButton.addEventListener('click', () => {openEditToDoDialog(todo)});
 
     let deleteToDoButton = document.createElement('button');
+    deleteToDoButton.textContent = "Delete";
     deleteToDoButton.addEventListener('click', () => {deleteToDo(todo)});
 
     toDoContainer.appendChild(todoTitleUI)
@@ -213,6 +222,8 @@ function openEditToDoDialog(todo){ // <---------- TO-DO
     // newToDoDialog.showModal();
 }
 
-function deleteToDo(todo){ // <---------- TO-DO
-    alert('Delete this ToDo: ' + todo.name);
+function deleteToDo(todo, project){ // <---------- TO-DO
+    // alert('Delete this ToDo: ' + todo.name);
+    // project.deleteToDo(todo.name);
+
 }
