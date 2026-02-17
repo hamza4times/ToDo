@@ -1,3 +1,9 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&display=swap');
+
+*{
+    font-family: "DM Sans";
+}
+
 #content{
     background-color: red;
     display: grid;
@@ -19,3 +25,29 @@
     background-color: red;
 }
 
+#viewAllToDosButton{
+    background-color: yellowgreen;
+}
+
+#projectButtonContainer{
+    background-color: burlywood;
+}
+
+/* credit for animation bellow: https://www.csswand.dev/ */
+
+.button-animated {
+color: #1D9AF2;
+background-color: #292D3E;
+border: 1px solid #1D9AF2;
+border-radius: 4px;
+padding: 0 15px;
+cursor: pointer;
+height:32px;
+font-size:14px;
+transition: all 0.2s ease-in-out;
+}
+
+.button-animated:hover {
+box-shadow: 1px 1px #53a7ea, 2px 2px #53a7ea, 3px 3px #53a7ea;
+transform: translateX(-3px);
+}

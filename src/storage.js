@@ -20,17 +20,9 @@ function storageAvailable(type) {
   }
 }
 
-function localStorageExist(item){
-    if (!localStorage.getItem("bgcolor")) {
-        populateStorage();
-    } else {
-        setItem();
-    }
-}
-
 function populateStorage(item){
     if (storageAvailable("localStorage")) {
-        localStorage.getItem(JSON.parse(item));
+        localStorage.getItem(JSON.parse(String(item)));
     } else {
         return 0;
     }
@@ -51,3 +43,11 @@ function clearStorage(){
         return 0;
     }
 }
+
+// function localStorageExist(item){
+//     if (!localStorage.getItem(String(item))) {
+//         populateStorage();
+//     } else {
+//         setItem();
+//     }
+// }
