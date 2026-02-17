@@ -18,6 +18,9 @@ class project{
     addToDo(todoName){
         this.todos.push(todoName);
     }
+    updateToDo(todoName){
+        
+    }
     clearToDos(){
         this.todos = [];
     }
