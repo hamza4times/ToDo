@@ -1,5 +1,4 @@
-export {storageAvailable, populateStorage, setItem, clearStorage}; // <============= functions
-
+export {storageAvailable, getItem, setItem, clearStorage}; // <============= functions
 
 function storageAvailable(type) {
   let storage;
@@ -20,22 +19,6 @@ function storageAvailable(type) {
   }
 }
 
-function populateStorage(item){
-    if (storageAvailable("localStorage")) {
-        localStorage.getItem(JSON.parse(String(item)));
-    } else {
-        return 0;
-    }
-}
-
-function setItem(item, value){
-    if (storageAvailable("localStorage")) {
-        localStorage.setItem(item, JSON.stringify(value));
-    } else {
-        return 0;
-    }  
-}
-
 function clearStorage(){
     if (storageAvailable("localStorage")){
         localStorage.clear();
@@ -44,10 +27,20 @@ function clearStorage(){
     }
 }
 
-// function localStorageExist(item){
-//     if (!localStorage.getItem(String(item))) {
-//         populateStorage();
-//     } else {
-//         setItem();
-//     }
-// }
+// <-------------------- Improved functions ------------------------>
+
+function getItem(key){
+    if (storageAvailable("localStorage")){
+        localStorage.getItem(JSON.parse(String(key)));
+    }else{
+        return 0;
+    }
+}
+
+function setItem(key, value){
+    if (storageAvailable("localStorage")){
+        localStorage.setItem(key, JSON.stringify(value));
+    }else{
+        return 0;
+    }
+}

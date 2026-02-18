@@ -1,5 +1,7 @@
 // import { format, compareAsc } from "date-fns";
-export {projects, deleteProject, project, toDo};
+export {projects, deleteProject, project, toDo}; // functions
+import {getItem, setItem, clearStorage} from "./storage.js"; // storage
+export {save, load} // storage function
 /*
 title, description, dueDate and priority
 */
@@ -18,9 +20,6 @@ class project{
     addToDo(todoName){
         this.todos.push(todoName);
     }
-    updateToDo(todoName){
-        
-    }
     clearToDos(){
         this.todos = [];
     }
@@ -32,6 +31,13 @@ class toDo{
         this.dueDate = dueDate;
         this.priority = priority;
         this.notes = notes;
+    }
+    updateToDo(newTitle, newDescription, newDueDate, newPriority, newNotes){
+        this.title = newTitle;
+        this.description = newDescription;
+        this.dueDate = newDueDate;
+        this.priority = newPriority;
+        this.notes = newNotes;
     }
 }
 
@@ -46,3 +52,25 @@ function deleteProject(projectName){
             projects.splice(index, 1);
         }
 }
+
+// <-------------------------- Storage related ------------------------------>
+
+function save(){
+    setItem(projects, projects);
+    for (let i=0; i < projects.length; i++){
+        for (let j=0; j < projects[i].todos.length; j++){
+            setItem(projects[i].todos[j].name, projects[i].todos[j]);
+        }
+
+    }
+}
+
+function load(){
+    let projects = getItem(projects);
+    for (let i=0; i < projects.length; i++){
+        for (let j=0; j < projects[i].todos.length; j++){
+            getItem(projects[i].todos[j]);
+        }
+    }
+}
+

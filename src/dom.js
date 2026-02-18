@@ -1,4 +1,5 @@
 import {projects, deleteProject} from "./logic.js"; // functions [import]
+import {getItem, setItem, clearStorage} from "./storage.js"; // functions [import] - storage
 import {project, toDo} from "./logic.js"; // classes [import]
 export {updateProjectSidebar} // functions [export]
 
@@ -78,15 +79,11 @@ function createProjectPage(project){
     main.appendChild(projectName);
 
     for (let i=0; i < todos.length; i++){
-        createToDoUI(todos[i]);
-        // let todo = todos[i].title;
-        // let todoText = document.createElement('h1');
-        // todoText.textContent = todo;
-        // main.appendChild(todoText);
+        createToDoUI(todos[i], project);
     }
 }
 
-function createToDoUI(todo){
+function createToDoUI(todo, project){
     let toDoContainer = document.createElement('div');
     mainContent.appendChild(toDoContainer);
     addID(toDoContainer, "toDoContainer");
@@ -113,11 +110,11 @@ function createToDoUI(todo){
 
     let editToDoButton = document.createElement('button');
     editToDoButton.textContent = "Edit";
-    editToDoButton.addEventListener('click', () => {openEditToDoDialog(todo)});
+    editToDoButton.addEventListener('click', () => {openEditToDoDialog(todo, project)});
 
     let deleteToDoButton = document.createElement('button');
     deleteToDoButton.textContent = "Delete";
-    deleteToDoButton.addEventListener('click', () => {deleteToDo(todo)});
+    deleteToDoButton.addEventListener('click', () => {deleteToDo(todo, project)});
 
     toDoContainer.appendChild(todoTitleUI)
     toDoContainer.appendChild(tododescriptionUI)
@@ -175,59 +172,70 @@ function openCreateNewToDoDialog(project){
     newToDoDialog.showModal();
 }
 
-// <-------------------- To Do ----------------------->
+// <-------------------- To Do Buttons ----------------------->
 
-// function openEditToDoDialog(todo){ // <---------- TO-DO / Construction
-//     alert('Opened Edit Menu For this ToDo: ' + todo.name);
-//     let editToDoDialog = document.createElement('dialog');
-//     let closeButton = document.createElement('button');
-//     closeButton.textContent = "Close";
-//     let editTitleInputField = document.createElement('input');
-//     editTitleInputField.setAttribute('placeholder', 'title');
-//     let editDescriptionInputField = document.createElement('input');
-//     editDescriptionInputField.setAttribute('placeholder', 'description');
-//     let editDueDateInputField = document.createElement('input');
-//     editDueDateInputField.setAttribute('type', 'date');
-//     let editPriorityInputField = document.createElement('input');
-//     editPriorityInputField.setAttribute('placeholder', 'priority (H/M/L)');
-//     let editNotesInputField = document.createElement('input');
-//     editNotesInputField.setAttribute('placeholder', 'notes');
-//     let submitButton = document.createElement('button');
-//     submitButton.textContent = "Submit";
+function openEditToDoDialog(todo, project){
+    let editToDoDialog = document.createElement('dialog');
 
-//     closeButton.addEventListener('click', () => {
-//         editToDoDialog.innerHTML = '';
-//         editToDoDialog.close();
-//     });
+    let closeButton = document.createElement('button');
+    closeButton.textContent = "Close";
 
-//     submitButton.addEventListener('click', () => {
-//         let title = titleInputField.value;
-//         let description = descriptionInputField.value;
-//         let dueDate = dueDateInputField.value;
-//         let priority = priorityInputField.value;
-//         let notes = notesInputField.value;
-//         let newTodo = new toDo (title, description, dueDate, priority, notes);
-//         project.addToDo(newTodo);
-//         createProjectPage(project);
-//     });
+    let editTitleInputField = document.createElement('input');
+    editTitleInputField.setAttribute('placeholder', 'title');
+    editTitleInputField.value = todo.title;
+
+    let editDescriptionInputField = document.createElement('input');
+    editDescriptionInputField.setAttribute('placeholder', 'description');
+    editDescriptionInputField.value = todo.description;
+
+    let editDueDateInputField = document.createElement('input');
+    editDueDateInputField.setAttribute('type', 'date');
+    editDueDateInputField.value = todo.dueDate;
+
+    let editPriorityInputField = document.createElement('input');
+    editPriorityInputField.setAttribute('placeholder', 'priority (H/M/L)');
+    editPriorityInputField.value = todo.priority;
+
+    let editNotesInputField = document.createElement('input');
+    editNotesInputField.setAttribute('placeholder', 'notes');
+    editNotesInputField.value = todo.notes;
+
+    let submitButton = document.createElement('button');
+    submitButton.textContent = "Submit";
+
+    closeButton.addEventListener('click', () => {
+        editToDoDialog.innerHTML = '';
+        editToDoDialog.close();
+    });
+
+    submitButton.addEventListener('click', () => {
+        let title = editTitleInputField.value;
+        let description = editDescriptionInputField.value;
+        let dueDate = editDueDateInputField.value;
+        let priority = editPriorityInputField.value;
+        let notes = editNotesInputField.value;
+        todo.updateToDo(title, description, dueDate, priority, notes);
+        createProjectPage(project);
+        editToDoDialog.innerHTML = '';
+        editToDoDialog.close();
+    });
     
 
-//     // main.appendChild(newToDoDialog);
-//     // newToDoDialog.appendChild(closeButton);
-//     // newToDoDialog.appendChild(titleInputField);
-//     // newToDoDialog.appendChild(descriptionInputField);
-//     // newToDoDialog.appendChild(dueDateInputField);
-//     // newToDoDialog.appendChild(priorityInputField);
-//     // newToDoDialog.appendChild(notesInputField);
-//     // newToDoDialog.appendChild(submitButton);
+    main.appendChild(editToDoDialog);
+    editToDoDialog.appendChild(closeButton);
+    editToDoDialog.appendChild(editTitleInputField);
+    editToDoDialog.appendChild(editDescriptionInputField);
+    editToDoDialog.appendChild(editDueDateInputField);
+    editToDoDialog.appendChild(editPriorityInputField);
+    editToDoDialog.appendChild(editNotesInputField);
+    editToDoDialog.appendChild(submitButton);
 
-//     // newToDoDialog.showModal();
-// }
+    editToDoDialog.showModal();
+}
 
-function deleteToDo(todo, project){ // <---------- TO-DO
-    // alert('Delete this ToDo: ' + todo.name);
-    // project.deleteToDo(todo.name);
-
+function deleteToDo(todo, project){
+    project.deleteToDo(todo.title);
+    createProjectPage(project);
 }
 
 // <------------------- Tool Kit --------------------->
