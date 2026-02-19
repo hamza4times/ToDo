@@ -1,7 +1,7 @@
 // import { format, compareAsc } from "date-fns";
 export {projects, deleteProject, project, toDo}; // functions
 import {getItem, setItem, clearStorage} from "./storage.js"; // storage
-export {save, load} // storage function
+// export {save, load} // storage function
 /*
 title, description, dueDate and priority
 */
@@ -55,22 +55,22 @@ function deleteProject(projectName){
 
 // <-------------------------- Storage related ------------------------------>
 
-function save(){
-    setItem(projects, projects);
-    for (let i=0; i < projects.length; i++){
-        for (let j=0; j < projects[i].todos.length; j++){
-            setItem(projects[i].todos[j].name, projects[i].todos[j]);
-        }
+// function save(){
+//     setItem(projects, projects);
+//     for (let i=0; i < projects.length; i++){
+//         for (let j=0; j < projects[i].todos.length; j++){
+//             setItem(projects[i].todos[j].name, projects[i].todos[j]);
+//         }
 
-    }
-}
+//     }
+// }
 
-function load(){
-    let projects = getItem(projects);
-    for (let i=0; i < projects.length; i++){
-        for (let j=0; j < projects[i].todos.length; j++){
-            getItem(projects[i].todos[j]);
-        }
-    }
-}
+// function load(){
+//     let projects = getItem(projects);
+//     for (let i=0; i < projects.length; i++){
+//         for (let j=0; j < projects[i].todos.length; j++){
+//             getItem(projects[i].todos[j]);
+//         }
+//     }
+// }
 

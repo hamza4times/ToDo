@@ -1,4 +1,7 @@
-export {storageAvailable, getItem, setItem, clearStorage}; // <============= functions
+export {storageAvailable, setUpLocalStorage, clearStorage}; // <============= functions
+import {projects} from "./logic.js"; // Array
+import {updateProjectSidebar} from "./dom.js";
+import {project, toDo} from "./logic.js"; // Classes
 
 function storageAvailable(type) {
   let storage;
@@ -26,21 +29,73 @@ function clearStorage(){
         return 0;
     }
 }
+// <----------------------------------------------- Improved
+function setUpLocalStorage(){
+    if (storageAvailable("localStorage")) {
+        if (!localStorage.getItem("projects")) {
+            populateStorage();
+            covertToProjectsAndToDosClass(projects);
+            projects.onchange = populateStorage();
+        } else {
+            setProjects();
+            covertToProjectsAndToDosClass(projects);
+            projects.onchange = populateStorage();
+        }
+    } else {
+        console.log('No Local Storage');
+    }
+}
 
-// <-------------------- Improved functions ------------------------>
-
-function getItem(key){
-    if (storageAvailable("localStorage")){
-        localStorage.getItem(JSON.parse(String(key)));
-    }else{
+function setProjects() {
+    if (storageAvailable("localStorage")) {
+        const projects = localStorage.getItem("projects");
+        updateProjectSidebar(JSON.parse(localStorage.getItem("projects")));
+    } else {
         return 0;
     }
 }
 
-function setItem(key, value){
-    if (storageAvailable("localStorage")){
-        localStorage.setItem(key, JSON.stringify(value));
-    }else{
+
+function populateStorage(){
+    if (storageAvailable("localStorage")) {
+        localStorage.setItem("projects", JSON.stringify(projects));
+    } else {
         return 0;
     }
+}
+
+function covertToProjectsAndToDosClass(projectsArray){
+    projectsArray.forEach(element => {
+        let projectName = element.name;
+        let projectToDos = element.todos;
+        let newProject = new project(projectName, projectToDos);
+
+        let index = projectsArray.indexOf(element);
+        if (index > -1) {
+            projectsArray.splice(index, 1);
+        }else{
+            console.log('Item not found (Project) ! <- function: covertToProjectsAndToDosClass <- in storage.js');
+        }
+
+        projectsArray.push(newProject);
+
+        projectToDos.forEach(element => {
+            let title = element.title;
+            let description = element.description;
+            let dueDate = element.dueDate;
+            let priority = element.priority;
+            let notes = element.notes;
+
+            let newTodo = new toDo(title, description, dueDate, priority, notes);
+
+            let index = projectToDos.indexOf(element);
+            if (index > -1) {
+                projectToDos.splice(index, 1);
+            }else{
+                console.log('Item not found (ToDo) ! <- function: covertToProjectsAndToDosClass <- in storage.js');
+            }
+
+            projectToDos.push(newTodo);
+        });
+    });
 }

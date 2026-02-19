@@ -19,7 +19,7 @@ addProjectButton.addEventListener('click', () => {
     createNewProjectDialog();
 });
 
-function updateProjectSidebar(){
+function updateProjectSidebar(projects){
     projectButtonContainer.innerHTML = '';
     for (let i=0; i < projects.length; i++){
         let projectName = projects[i].name;
@@ -56,7 +56,7 @@ function createNewProjectDialog(){
     submitNewProjectButton.addEventListener('click', () => {
         let newProject = new project (projectNameInputField.value, []);
         projects.push(newProject);
-        updateProjectSidebar();
+        updateProjectSidebar(projects);
         addProjectDialog.close();
     });
 
