@@ -214,6 +214,10 @@ function openEditToDoDialog(todo, project){
         let dueDate = editDueDateInputField.value;
         let priority = editPriorityInputField.value;
         let notes = editNotesInputField.value;
+        console.log(projects);
+        console.log(todo);
+        console.log(project);
+        console.log(project.todos);
         todo.updateToDo(title, description, dueDate, priority, notes);
         createProjectPage(project);
         editToDoDialog.innerHTML = '';
