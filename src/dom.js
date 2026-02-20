@@ -1,5 +1,5 @@
 import {projects, deleteProject} from "./logic.js"; // functions [import]
-import {getItem, setItem, clearStorage} from "./storage.js"; // functions [import] - storage
+import {getItem, setItem, clearStorage, populateStorage} from "./storage.js"; // functions [import] - storage
 import {project, toDo} from "./logic.js"; // classes [import]
 export {updateProjectSidebar} // functions [export]
 
@@ -61,6 +61,8 @@ function createNewProjectDialog(){
     });
 
     addProjectDialog.appendChild(submitNewProjectButton);
+
+    populateStorage();
 }
 
 function createProjectPage(project){

@@ -1,6 +1,6 @@
 // import { format, compareAsc } from "date-fns";
 export {projects, deleteProject, project, toDo}; // functions
-import {getItem, setItem, clearStorage} from "./storage.js"; // storage
+import {getItem, setItem, clearStorage, populateStorage} from "./storage.js"; // storage
 // export {save, load} // storage function
 /*
 title, description, dueDate and priority
@@ -16,12 +16,15 @@ class project{
         if (index > -1){
             this.todos.splice(index, 1);
         }
+        populateStorage();
     }
     addToDo(todoName){
         this.todos.push(todoName);
+        populateStorage();
     }
     clearToDos(){
         this.todos = [];
+        populateStorage();
     }
 }
 class toDo{
@@ -38,6 +41,7 @@ class toDo{
         this.dueDate = newDueDate;
         this.priority = newPriority;
         this.notes = newNotes;
+        populateStorage();
     }
 }
 

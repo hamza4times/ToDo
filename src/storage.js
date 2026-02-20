@@ -1,4 +1,4 @@
-export {storageAvailable, setUpLocalStorage, clearStorage}; // <============= functions
+export {storageAvailable, setUpLocalStorage, clearStorage, populateStorage}; // <============= functions
 import {projects} from "./logic.js"; // Array
 import {updateProjectSidebar} from "./dom.js";
 import {project, toDo} from "./logic.js"; // Classes
@@ -35,11 +35,9 @@ function setUpLocalStorage(){
         if (!localStorage.getItem("projects")) {
             populateStorage();
             covertToProjectsAndToDosClass(projects);
-            projects.onchange = populateStorage();
         } else {
             setProjects();
             covertToProjectsAndToDosClass(projects);
-            projects.onchange = populateStorage();
         }
     } else {
         console.log('No Local Storage');
