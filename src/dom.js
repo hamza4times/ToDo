@@ -105,6 +105,7 @@ function createToDoUI(todo, project){
     let priority = todo.priority;
     let todoPriorityUI = document.createElement('h1');
     todoPriorityUI.textContent = priority;
+    assignIdToPriority(priority, toDoContainer);
 
     let notes = todo.notes;
     let todoNotesUI = document.createElement('h1');
@@ -129,6 +130,7 @@ function createToDoUI(todo, project){
 
 function openCreateNewToDoDialog(project){
     let newToDoDialog = document.createElement('dialog');
+    newToDoDialog.setAttribute('id', 'newToDoDialog');
 
     let closeButton = document.createElement('button');
     closeButton.textContent = "Close";
@@ -138,8 +140,29 @@ function openCreateNewToDoDialog(project){
     descriptionInputField.setAttribute('placeholder', 'description');
     let dueDateInputField = document.createElement('input');
     dueDateInputField.setAttribute('type', 'date');
-    let priorityInputField = document.createElement('input');
-    priorityInputField.setAttribute('placeholder', 'priority (H/M/L)');
+
+    let priorityDropDownContainer = document.createElement('div');
+    priorityDropDownContainer.setAttribute('id', 'priorityDropDownContainer');
+
+    let priorityDropDownLabel = document.createElement('label');
+    priorityDropDownLabel.setAttribute('for', 'priority');
+    priorityDropDownLabel.innerHTML = 'Priority: ';
+
+    let priorityDropDown = document.createElement('select');
+    priorityDropDown.setAttribute('name', 'priority');
+
+    let optionHighPriority = document.createElement('option');
+    optionHighPriority.setAttribute('value', 'High');
+    optionHighPriority.innerHTML = 'High';
+    let optionMediumPriority = document.createElement('option');
+    optionMediumPriority.setAttribute('value', 'Medium');
+    optionMediumPriority.innerHTML = 'Medium';
+    let optionLowPriority = document.createElement('option');
+    optionLowPriority.setAttribute('value', 'Low');
+    optionLowPriority.innerHTML = 'Low';
+
+    priorityDropDown.setAttribute('placeholder', 'priority (H/M/L)');
+
     let notesInputField = document.createElement('input');
     notesInputField.setAttribute('placeholder', 'notes');
     let submitButton = document.createElement('button');
@@ -154,7 +177,7 @@ function openCreateNewToDoDialog(project){
         let title = titleInputField.value;
         let description = descriptionInputField.value;
         let dueDate = dueDateInputField.value;
-        let priority = priorityInputField.value;
+        let priority = priorityDropDown.value;
         let notes = notesInputField.value;
         let newTodo = new toDo (title, description, dueDate, priority, notes);
         project.addToDo(newTodo);
@@ -163,15 +186,41 @@ function openCreateNewToDoDialog(project){
     
 
     main.appendChild(newToDoDialog);
-    newToDoDialog.appendChild(closeButton);
     newToDoDialog.appendChild(titleInputField);
     newToDoDialog.appendChild(descriptionInputField);
     newToDoDialog.appendChild(dueDateInputField);
-    newToDoDialog.appendChild(priorityInputField);
+
+    newToDoDialog.appendChild(priorityDropDownContainer);
+    priorityDropDownContainer.appendChild(priorityDropDownLabel);
+    priorityDropDownContainer.appendChild(priorityDropDown);
+    priorityDropDown.appendChild(optionHighPriority);
+    priorityDropDown.appendChild(optionMediumPriority);
+    priorityDropDown.appendChild(optionLowPriority);
+
     newToDoDialog.appendChild(notesInputField);
+
+    newToDoDialog.appendChild(closeButton);
+    closeButton.style.backgroundColor =  'RGB(255, 128, 128)';
     newToDoDialog.appendChild(submitButton);
+    submitButton.style.backgroundColor = 'RGB(144, 238, 144)';
 
     newToDoDialog.showModal();
+}
+
+function assignIdToPriority(priority, toDoContainer){
+    switch(priority){
+        case "High":
+            toDoContainer.setAttribute('id', 'highPriority');
+            break;
+        case "Medium":
+            toDoContainer.setAttribute('id', 'mediumPriority');
+            break;
+        case "Low":
+            toDoContainer.setAttribute('id', 'lowPriority');
+            break;
+        default:
+            toDoContainer.setAttribute('id', 'defualtPriority');
+    }
 }
 
 // <-------------------- To Do Buttons ----------------------->

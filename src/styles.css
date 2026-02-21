@@ -5,12 +5,13 @@
 }
 
 #content{
-    background-color: red;
     display: grid;
     grid-template-columns: 0.23fr 1fr;
 }
 #sidebar{
     background-color: blue;
+    display: grid;
+    gap: 5px;
 }
 #main{
     background-color: green;
@@ -22,6 +23,7 @@
 }
 
 #addProjectButton{
+    margin-top: 5px;
     background-color: red;
 }
 
@@ -29,8 +31,51 @@
     background-color: yellowgreen;
 }
 
+#highPriority{
+    background-color: red;
+}
+
+#mediumPriority{
+    background-color: yellow;
+}
+
+#lowPriority{
+    background-color: green;
+}
+
+#defualtPriority{
+    background-color: #1D9AF2;
+}
+
+#toDoContainer{
+    color: blueviolet;
+}
+
+#newToDoDialog{
+    background-color: rgb(213, 255, 255);
+    display: grid;
+    gap: 10px;
+}
+
+#priorityDropDownContainer{
+    display: grid;
+    text-align: start;
+    grid-template-rows: 2;
+}
+
+label{
+    font-size: 11px;
+}
+
+/* input, select{
+    background-color pe;
+} */
+
 #projectButtonContainer{
-    background-color: burlywood;
+    background-color: ;
+    display: grid;
+    gap: 10px;
+    margin-top: 30px;
 }
 
 /* credit for animation bellow: https://www.csswand.dev/ */
