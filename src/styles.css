@@ -31,6 +31,10 @@
     background-color: yellowgreen;
 }
 
+#expandedToDoDetailsContainer{
+    background-color: firebrick;
+}
+
 #highPriority{
     background-color: red;
 }

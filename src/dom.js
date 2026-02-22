@@ -94,22 +94,20 @@ function createToDoUI(todo, project){
     let todoTitleUI = document.createElement('h1');
     todoTitleUI.textContent = title;
 
-    let description = todo.description;
-    let tododescriptionUI = document.createElement('h1');
-    tododescriptionUI.textContent = description;
-
     let dueDate = todo.dueDate;
     let todoDueDateUI = document.createElement('h1');
     todoDueDateUI.textContent = dueDate;
 
     let priority = todo.priority;
-    let todoPriorityUI = document.createElement('h1');
-    todoPriorityUI.textContent = priority;
     assignIdToPriority(priority, toDoContainer);
 
-    let notes = todo.notes;
-    let todoNotesUI = document.createElement('h1');
-    todoNotesUI.textContent = notes;
+    let expandToDoButton = document.createElement('button');
+    expandToDoButton.textContent = '⬇️';
+    let expandedContentContainer = document.createElement('div');
+    expandToDoButton.addEventListener('click', () => {
+        expandedContentContainer.innerHTML = '';
+        expandDetails(todo, expandedContentContainer);
+    });
 
     let editToDoButton = document.createElement('button');
     editToDoButton.textContent = "Edit";
@@ -119,13 +117,12 @@ function createToDoUI(todo, project){
     deleteToDoButton.textContent = "Delete";
     deleteToDoButton.addEventListener('click', () => {deleteToDo(todo, project)});
 
-    toDoContainer.appendChild(todoTitleUI)
-    toDoContainer.appendChild(tododescriptionUI)
-    toDoContainer.appendChild(todoDueDateUI)
-    toDoContainer.appendChild(todoPriorityUI)
-    toDoContainer.appendChild(todoNotesUI)
-    toDoContainer.appendChild(editToDoButton)
-    toDoContainer.appendChild(deleteToDoButton)
+    toDoContainer.appendChild(todoTitleUI);
+    toDoContainer.appendChild(todoDueDateUI);
+    toDoContainer.appendChild(expandToDoButton);
+    toDoContainer.appendChild(editToDoButton);
+    toDoContainer.appendChild(deleteToDoButton);
+    toDoContainer.appendChild(expandedContentContainer);
 }
 
 function openCreateNewToDoDialog(project){
@@ -291,6 +288,33 @@ function openEditToDoDialog(todo, project){
 function deleteToDo(todo, project){
     project.deleteToDo(todo.title);
     createProjectPage(project);
+}
+
+function expandDetails(todo, container){
+    let notes = todo.notes;
+    let description = todo.description;
+
+    let expandedToDoDetailsContainer = document.createElement('div');
+    expandedToDoDetailsContainer.setAttribute('id', 'expandedToDoDetailsContainer');
+    container.appendChild(expandedToDoDetailsContainer);
+
+    let notesDOM = document.createElement('p');
+    notesDOM.textContent = 'Notes: ';
+    notesDOM.textContent += String(notes);
+    expandedToDoDetailsContainer.appendChild(notesDOM);
+
+    let descriptionDOM = document.createElement('p');
+    descriptionDOM.textContent = 'Description: ';
+    descriptionDOM.textContent += String(description);
+    expandedToDoDetailsContainer.appendChild(descriptionDOM);
+
+    let closeexpandedToDoDetailsButton = document.createElement('button');
+    closeexpandedToDoDetailsButton.textContent = '⬆️';
+    closeexpandedToDoDetailsButton.addEventListener('click', () => {
+        container.innerHTML = '';
+    });
+    expandedToDoDetailsContainer.appendChild(closeexpandedToDoDetailsButton);
+    
 }
 
 // <------------------- Tool Kit --------------------->
