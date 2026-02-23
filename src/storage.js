@@ -63,37 +63,53 @@ function populateStorage(){
 }
 
 function covertToProjectsAndToDosClass(projectsArray){
-    projectsArray.forEach(element => {
+    let newProjectArray = [];
+    projectsArray.forEach((element) => {
         let projectName = element.name;
         let projectToDos = element.todos;
-        let newProject = new project(projectName, projectToDos);
-
-        let index = projectsArray.indexOf(element);
-        if (index > -1) {
-            projectsArray.splice(index, 1);
-        }else{
-            console.log('Item not found (Project) ! <- function: covertToProjectsAndToDosClass <- in storage.js');
-        }
-
-        projectsArray.push(newProject);
-
-        projectToDos.forEach(element => {
+        let newToDoArray = [];
+        projectToDos.forEach((element) => {
             let title = element.title;
             let description = element.description;
             let dueDate = element.dueDate;
             let priority = element.priority;
             let notes = element.notes;
-
             let newTodo = new toDo(title, description, dueDate, priority, notes);
-
-            let index = projectToDos.indexOf(element);
-            if (index > -1) {
-                projectToDos.splice(index, 1);
-            }else{
-                console.log('Item not found (ToDo) ! <- function: covertToProjectsAndToDosClass <- in storage.js');
-            }
-
-            projectToDos.push(newTodo);
+            newToDoArray.push(newTodo);
         });
+        projectToDos = newToDoArray;
+        let newProject = new project(projectName, projectToDos);
+        newProjectArray.push(newProject);
     });
+    projectsArray = newProjectArray;
+    newProjectArray = [];
+
 }
+
+
+
+
+
+// function covertToProjectsAndToDosClass(projectsArray){
+//     let newProjectArray = projectsArray.map((element) => {
+//         let projectName = element.name;
+//         let projectToDos = element.todos;
+//         let newToDoArray = projectToDos.map((element) => {
+
+//             let title = element.title;
+//             let description = element.description;
+//             let dueDate = element.dueDate;
+//             let priority = element.priority;
+//             let notes = element.notes;
+
+//             let newTodo = new toDo(title, description, dueDate, priority, notes);
+
+//             newToDoArray.push(newTodo);
+//         });
+//         projectToDos = newToDoArray;
+//         let newProject = new project(projectName, projectToDos);
+//         newProjectArray.push(newProject);
+//     });
+//     projectsArray = newProjectArray;
+
+// }
