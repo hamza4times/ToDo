@@ -41,10 +41,7 @@ class toDo{
     }
 }
 
-let exampleToDo1 = new toDo("Walk the dog", "I will walk the dog", new Date(1995, 11, 25, 3, 24, 0, 0), "HIGH!", "DoDoDoDo");
-let newProject = new project("projectname", [exampleToDo1]);
-
-let projects = [newProject];
+let projects = [];
 
 function deleteProject(projectName){
     const index = projects.indexOf(projectName);
@@ -53,3 +50,8 @@ function deleteProject(projectName){
         }
 }
 
+function addDefualtProject(){ // <==== ToDo
+    //To-Do
+    // let exampleToDo1 = new toDo("Walk the dog", "I will walk the dog", new Date(1995, 11, 25, 3, 24, 0, 0), "HIGH!", "DoDoDoDo");
+    // let newProject = new project("projectname", [exampleToDo1]);
+}

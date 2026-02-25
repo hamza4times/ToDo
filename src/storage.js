@@ -81,35 +81,25 @@ function covertToProjectsAndToDosClass(projectsArray){
         let newProject = new project(projectName, projectToDos);
         newProjectArray.push(newProject);
     });
-    projectsArray = newProjectArray;
+
+    console.log("projectsArray(parameter): ");
+    console.log(projectsArray);
+    console.log("newProjectArray: ");
+    console.log(newProjectArray);
+
+    // emptys projectsArray
+    while (projectsArray.length > 0){
+        projectsArray.pop();
+    }
+
+    let newProjectArrayLength = newProjectArray.length; // sets a length for the iteration
+
+    // fill up projectsArray with values from new arrays
+    for (let i = 0; i < newProjectArrayLength; i++){ 
+        projectsArray.push(newProjectArray[i]);
+    }
+
+
+    newProjectArrayLength = 0;
     newProjectArray = [];
-
 }
-
-
-
-
-
-// function covertToProjectsAndToDosClass(projectsArray){
-//     let newProjectArray = projectsArray.map((element) => {
-//         let projectName = element.name;
-//         let projectToDos = element.todos;
-//         let newToDoArray = projectToDos.map((element) => {
-
-//             let title = element.title;
-//             let description = element.description;
-//             let dueDate = element.dueDate;
-//             let priority = element.priority;
-//             let notes = element.notes;
-
-//             let newTodo = new toDo(title, description, dueDate, priority, notes);
-
-//             newToDoArray.push(newTodo);
-//         });
-//         projectToDos = newToDoArray;
-//         let newProject = new project(projectName, projectToDos);
-//         newProjectArray.push(newProject);
-//     });
-//     projectsArray = newProjectArray;
-
-// }
