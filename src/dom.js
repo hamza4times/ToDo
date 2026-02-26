@@ -1,5 +1,5 @@
 import {projects, deleteProject} from "./logic.js"; // functions [import]
-import {getItem, setItem, clearStorage, populateStorage} from "./storage.js"; // functions [import] - storage
+import {clearStorage, populateStorage} from "./storage.js"; // functions [import] - storage
 import {project, toDo} from "./logic.js"; // classes [import]
 export {updateProjectSidebar} // functions [export]
 
@@ -52,13 +52,11 @@ function createNewProjectDialog(){
 
     let submitNewProjectButton = document.createElement('button');
     submitNewProjectButton.textContent =  "Create new project";
-
     submitNewProjectButton.addEventListener('click', () => {
         let newProject = new project (projectNameInputField.value, []);
         projects.push(newProject);
         updateProjectSidebar(projects);
         addProjectDialog.close();
-        console.log(projects);
         populateStorage();
     });
 
@@ -262,10 +260,7 @@ function openEditToDoDialog(todo, project){
         let dueDate = editDueDateInputField.value;
         let priority = editPriorityInputField.value;
         let notes = editNotesInputField.value;
-        // console.log(projects);
         console.log(todo);
-        // console.log(project);
-        // console.log(project.todos);
 
         todo.updateToDo(title, description, dueDate, priority, notes);
         createProjectPage(project);

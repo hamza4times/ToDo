@@ -46,13 +46,20 @@ function setUpLocalStorage(){
 
 function setProjects() {
     if (storageAvailable("localStorage")) {
-        const projects = localStorage.getItem("projects");
+        const localStorageProjects = JSON.parse(localStorage.getItem("projects"));
+        console.log(localStorageProjects);
+
+        projects.length = 0;
+
+        for (let i=0; i < localStorageProjects.length; i++){
+            projects.push(localStorageProjects[i]);
+        }
+        // projects = localStorageProjects;
         updateProjectSidebar(JSON.parse(localStorage.getItem("projects")));
     } else {
         return 0;
     }
 }
-
 
 function populateStorage(){
     if (storageAvailable("localStorage")) {
@@ -81,11 +88,6 @@ function covertToProjectsAndToDosClass(projectsArray){
         let newProject = new project(projectName, projectToDos);
         newProjectArray.push(newProject);
     });
-
-    console.log("projectsArray(parameter): ");
-    console.log(projectsArray);
-    console.log("newProjectArray: ");
-    console.log(newProjectArray);
 
     // emptys projectsArray
     while (projectsArray.length > 0){

@@ -1,6 +1,5 @@
-// import { format, compareAsc } from "date-fns";
 export {projects, deleteProject, project, toDo}; // functions
-import {getItem, setItem, clearStorage, populateStorage} from "./storage.js"; // storage
+import {populateStorage, setProjects} from "./storage.js"; // storage
 // ------------------------ Classes -------------------
 class project{
     constructor(name, todos){
@@ -41,6 +40,8 @@ class toDo{
     }
 }
 
+
+
 let projects = [];
 
 function deleteProject(projectName){
@@ -48,6 +49,7 @@ function deleteProject(projectName){
         if (index > -1){
             projects.splice(index, 1);
         }
+    populateStorage();
 }
 
 function addDefualtProject(){ // <==== ToDo
