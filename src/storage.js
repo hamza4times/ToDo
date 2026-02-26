@@ -34,10 +34,12 @@ function setUpLocalStorage(){
     if (storageAvailable("localStorage")) {
         if (!localStorage.getItem("projects")) {
             populateStorage();
-            covertToProjectsAndToDosClass(projects);
+            const localStorageProjects = JSON.parse(localStorage.getItem("projects"));
+            covertToProjectsAndToDosClass(localStorageProjects);
         } else {
             setProjects();
-            covertToProjectsAndToDosClass(projects);
+            const localStorageProjects = JSON.parse(localStorage.getItem("projects"));
+            covertToProjectsAndToDosClass(localStorageProjects);
         }
     } else {
         console.log('No Local Storage');
@@ -47,14 +49,13 @@ function setUpLocalStorage(){
 function setProjects() {
     if (storageAvailable("localStorage")) {
         const localStorageProjects = JSON.parse(localStorage.getItem("projects"));
-        console.log(localStorageProjects);
 
         projects.length = 0;
 
         for (let i=0; i < localStorageProjects.length; i++){
             projects.push(localStorageProjects[i]);
         }
-        // projects = localStorageProjects;
+
         updateProjectSidebar(JSON.parse(localStorage.getItem("projects")));
     } else {
         return 0;
@@ -74,6 +75,8 @@ function covertToProjectsAndToDosClass(projectsArray){
     projectsArray.forEach((element) => {
         let projectName = element.name;
         let projectToDos = element.todos;
+        // console.log(projectName);
+        // console.log(projectToDos);
         let newToDoArray = [];
         projectToDos.forEach((element) => {
             let title = element.title;
@@ -81,9 +84,11 @@ function covertToProjectsAndToDosClass(projectsArray){
             let dueDate = element.dueDate;
             let priority = element.priority;
             let notes = element.notes;
+
             let newTodo = new toDo(title, description, dueDate, priority, notes);
             newToDoArray.push(newTodo);
         });
+
         projectToDos = newToDoArray;
         let newProject = new project(projectName, projectToDos);
         newProjectArray.push(newProject);
@@ -94,10 +99,11 @@ function covertToProjectsAndToDosClass(projectsArray){
         projectsArray.pop();
     }
 
+
     let newProjectArrayLength = newProjectArray.length; // sets a length for the iteration
 
     // fill up projectsArray with values from new arrays
-    for (let i = 0; i < newProjectArrayLength; i++){ 
+    for (let i = 0; i < newProjectArrayLength; i++){
         projectsArray.push(newProjectArray[i]);
     }
 

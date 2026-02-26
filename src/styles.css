@@ -55,7 +55,7 @@
     color: blueviolet;
 }
 
-#newToDoDialog{
+#newToDoDialog[open]{
     background-color: rgb(213, 255, 255);
     display: grid;
     gap: 10px;

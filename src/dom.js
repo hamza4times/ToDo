@@ -175,6 +175,7 @@ function openCreateNewToDoDialog(project){
         let priority = priorityDropDown.value;
         let notes = notesInputField.value;
         let newTodo = new toDo (title, description, dueDate, priority, notes);
+        console.log(newTodo);
         project.addToDo(newTodo);
         createProjectPage(project);
     });
