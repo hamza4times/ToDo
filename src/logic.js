@@ -40,8 +40,6 @@ class toDo{
     }
 }
 
-
-
 let projects = [];
 
 function deleteProject(projectName){

@@ -56,7 +56,8 @@ function setProjects() {
             projects.push(localStorageProjects[i]);
         }
 
-        updateProjectSidebar(JSON.parse(localStorage.getItem("projects")));
+        updateProjectSidebar(projects);
+        
     } else {
         return 0;
     }
@@ -72,11 +73,9 @@ function populateStorage(){
 
 function covertToProjectsAndToDosClass(projectsArray){
     let newProjectArray = [];
-    projectsArray.forEach((element) => {
+    projects.forEach((element) => {
         let projectName = element.name;
         let projectToDos = element.todos;
-        // console.log(projectName);
-        // console.log(projectToDos);
         let newToDoArray = [];
         projectToDos.forEach((element) => {
             let title = element.title;
@@ -95,19 +94,59 @@ function covertToProjectsAndToDosClass(projectsArray){
     });
 
     // emptys projectsArray
-    while (projectsArray.length > 0){
-        projectsArray.pop();
+    while (projects.length > 0){
+        projects.pop();
     }
-
 
     let newProjectArrayLength = newProjectArray.length; // sets a length for the iteration
 
     // fill up projectsArray with values from new arrays
     for (let i = 0; i < newProjectArrayLength; i++){
-        projectsArray.push(newProjectArray[i]);
+        projects.push(newProjectArray[i]);
     }
-
 
     newProjectArrayLength = 0;
     newProjectArray = [];
 }
+
+
+// function covertToProjectsAndToDosClass(projectsArray){
+//     let newProjectArray = [];
+//     projectsArray.forEach((element) => {
+//         let projectName = element.name;
+//         let projectToDos = element.todos;
+//         let newToDoArray = [];
+//         projectToDos.forEach((element) => {
+//             let title = element.title;
+//             let description = element.description;
+//             let dueDate = element.dueDate;
+//             let priority = element.priority;
+//             let notes = element.notes;
+
+//             let newTodo = new toDo(title, description, dueDate, priority, notes);
+//             newToDoArray.push(newTodo);
+//         });
+
+//         projectToDos = newToDoArray;
+//         let newProject = new project(projectName, projectToDos);
+//         newProjectArray.push(newProject);
+//     });
+
+//     // emptys projectsArray
+//     while (projectsArray.length > 0){
+//         projectsArray.pop();
+//     }
+
+//     let newProjectArrayLength = newProjectArray.length; // sets a length for the iteration
+
+//     // fill up projectsArray with values from new arrays
+//     for (let i = 0; i < newProjectArrayLength; i++){
+//         projectsArray.push(newProjectArray[i]);
+//     }
+
+//     console.log(projects);
+//     console.log(newProjectArray);
+
+//     newProjectArrayLength = 0;
+//     newProjectArray = [];
+// }

@@ -4,6 +4,5 @@ import {updateProjectSidebar} from "./dom.js";
 import {storageAvailable} from "./storage.js";
 import {setUpLocalStorage} from "./storage.js";
 
-console.log(projects);
 
 setUpLocalStorage();

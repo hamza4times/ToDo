@@ -9,23 +9,23 @@ let projectButtonContainer = document.querySelector('#projectButtonContainer');
 let addProjectButton = document.querySelector('#addProjectButton');
 let viewAllToDosButton = document.querySelector('#viewAllToDosButton');
 
-viewAllToDosButton.addEventListener('click', () => { // <=========== Under Construction
+viewAllToDosButton.addEventListener('click', () => { // <=========== Under Construction  // Keeps projects methods + good parameter
     for (let i = 0; i < projects.length; i++){
         createProjectPage(projects[i]);
     }
 });
 
-addProjectButton.addEventListener('click', () => {
+addProjectButton.addEventListener('click', () => { // Keeps projects methods
     createNewProjectDialog();
 });
 
-function updateProjectSidebar(projects){
+function updateProjectSidebar(projects){  // DOES NOT Keeps projects methods
+    console.log(projects);
     projectButtonContainer.innerHTML = '';
     for (let i=0; i < projects.length; i++){
         let projectName = projects[i].name;
         let projectBTN = document.createElement('button');
         projectBTN.textContent = projectName;
-
         projectBTN.addEventListener('click', () =>{
             createProjectPage(projects[i]);
         })
@@ -34,7 +34,7 @@ function updateProjectSidebar(projects){
     }
 }
 
-function createNewProjectDialog(){
+function createNewProjectDialog(){ // Keeps projects methods + think good parameter
     let addProjectDialog = document.querySelector('#addProjectDialog');
     addProjectDialog.showModal();
     addProjectDialog.innerHTML = "";
@@ -63,7 +63,7 @@ function createNewProjectDialog(){
     addProjectDialog.appendChild(submitNewProjectButton);
 }
 
-function createProjectPage(project){
+function createProjectPage(project){ // Keeps projects methods
     main.innerHTML = '';
 
     let addNewToDoButton = document.createElement('button');
@@ -83,7 +83,7 @@ function createProjectPage(project){
     }
 }
 
-function createToDoUI(todo, project){
+function createToDoUI(todo, project){ // Keeps projects methods
     let toDoContainer = document.createElement('div');
     mainContent.appendChild(toDoContainer);
     addID(toDoContainer, "toDoContainer");
@@ -123,7 +123,9 @@ function createToDoUI(todo, project){
     toDoContainer.appendChild(expandedContentContainer);
 }
 
-function openCreateNewToDoDialog(project){
+// Problem: project does not have method, but projects array with the project has method
+// debug: not correct parameter
+function openCreateNewToDoDialog(project){ // Keeps projects methods
     let newToDoDialog = document.createElement('dialog');
     newToDoDialog.setAttribute('id', 'newToDoDialog');
 
@@ -167,7 +169,6 @@ function openCreateNewToDoDialog(project){
         newToDoDialog.innerHTML = '';
         newToDoDialog.close();
     });
-
     submitButton.addEventListener('click', () => {
         let title = titleInputField.value;
         let description = descriptionInputField.value;
@@ -175,7 +176,6 @@ function openCreateNewToDoDialog(project){
         let priority = priorityDropDown.value;
         let notes = notesInputField.value;
         let newTodo = new toDo (title, description, dueDate, priority, notes);
-        console.log(newTodo);
         project.addToDo(newTodo);
         createProjectPage(project);
     });
